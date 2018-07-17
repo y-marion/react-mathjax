@@ -9,12 +9,14 @@ class NodeWithMathJax extends React.Component<*, *> {
         MathJax: ?Object,
         formula: string,
         inline?: boolean,
+        type?: string,
         onRender?: () => void
     };
     script: ?HTMLScriptElement;
 
     static defaultProps = {
         inline: false,
+        type: 'tex',
         onRender: () => {}
     };
 
@@ -92,11 +94,11 @@ class NodeWithMathJax extends React.Component<*, *> {
      * Create a script.
      */
     setScriptText(text: string): HTMLScriptElement {
-        const { inline } = this.props;
+        const { inline, type } = this.props;
 
         if (!this.script) {
             this.script = document.createElement('script');
-            this.script.type = `math/tex; ${inline ? '' : 'mode=display'}`;
+            this.script.type = `math/${type}; ${inline ? '' : 'mode=display'}`;
             this.container.current.appendChild(this.script);
         }
 
